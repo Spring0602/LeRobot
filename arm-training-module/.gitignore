@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+
+# Local configuration and secrets
+.env
+*.local.yaml
+*.local.yml
+
+# LeRobot / Hugging Face caches
+.cache/
+
+# ROS 2 build products
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# Datasets: retain documentation and metadata templates only
+datasets/*
+!datasets/README.md
+!datasets/.gitkeep
+!datasets/metadata/
+!datasets/metadata/**
+
+# Training outputs: retain documentation only
+outputs/*
+!outputs/README.md
+!outputs/.gitkeep
+
+# Model and media artifacts
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.mp4
+*.avi
+

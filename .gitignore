@@ -1,0 +1,43 @@
+# Local agent metadata
+.agents/
+.codex/
+
+# Original editable office document (Markdown version is tracked)
+机械臂训练模块.docx
+
+# Python environments and caches
+.venv/
+venv/
+lerobot-env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Secrets and local configuration
+.env
+*.local.yaml
+*.local.yml
+
+# Training data, outputs and model weights
+datasets/
+outputs/
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.mp4
+*.avi
+
+# ROS 2 build output
+build/
+install/
+log/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
