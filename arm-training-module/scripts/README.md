@@ -3,7 +3,7 @@
 计划按工作流组织脚本：
 
 ```text
-check_devices.py   # 检查串口、相机和机械臂连接
+check_devices.py   # 只读检查串口、稳定链接和访问权限（已实现）
 calibrate.py       # 启动机械臂标定
 teleoperate.py     # 启动主从臂遥操作
 record.py          # 采集示教数据
@@ -13,6 +13,16 @@ run_policy.py      # 真机策略推理
 ```
 
 这些文件将在明确设备端口、相机数量和数据集命名后逐步实现。
+
+设备盘点：
+
+```bash
+source "$HOME/lerobot-env/bin/activate"
+cd "/mnt/hgfs/engineering_files/arm-training-module"
+python scripts/check_devices.py
+```
+
+未发现候选串口时脚本返回状态码 `2`，表示等待硬件或 VMware USB 直通，不代表脚本异常。
 
 ## Ubuntu 环境安装
 
