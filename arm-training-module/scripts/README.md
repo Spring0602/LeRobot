@@ -4,7 +4,8 @@
 
 ```text
 check_devices.py   # 只读检查串口、稳定链接和访问权限（已实现）
-calibrate.py       # 启动机械臂标定
+calibration_files.py # 只读校验和备份标定文件（已实现）
+calibrate.py       # 真实标定包装器（等待硬件和上游单臂隔离方案）
 teleoperate.py     # 启动主从臂遥操作
 record.py          # 采集示教数据
 train.py           # 启动策略训练
@@ -23,6 +24,13 @@ python scripts/check_devices.py
 ```
 
 未发现候选串口时脚本返回状态码 `2`，表示等待硬件或 VMware USB 直通，不代表脚本异常。
+
+标定文件状态与备份：
+
+```bash
+python scripts/calibration_files.py status
+python scripts/calibration_files.py backup
+```
 
 ## Ubuntu 环境安装
 
