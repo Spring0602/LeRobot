@@ -1,0 +1,226 @@
+/home/jetson/.bash_history:45:conda create -y -n lerobot python=3.10
+/home/jetson/.bash_history:46:conda activate lerobot
+/home/jetson/.bash_history:52:conda activate lerobot
+/home/jetson/.bash_history:53:cd lerobot-main/
+/home/jetson/.bash_history:59:ls /dev/tty-*
+/home/jetson/.bash_history:60:ls /dev/tty*
+/home/jetson/.bash_history:61:ls /dev/ttyUSB*
+/home/jetson/.bash_history:62:sudo ls /dev/ttyUSB*
+/home/jetson/.bash_history:68:sudo apt remove brltty
+/home/jetson/.bash_history:70:ls /dev/ttyUSB*
+/home/jetson/.bash_history:72:ls /dev/ttyUSB*
+/home/jetson/.bash_history:73:ls /dev/ttyACM*
+/home/jetson/.bash_history:74:conda activate lerobot
+/home/jetson/.bash_history:75:cd lerobot-main/
+/home/jetson/.bash_history:76:python lerobot/scripts/find_motors_bus_port.py
+/home/jetson/.bash_history:78:ls /dev/tty*
+/home/jetson/.bash_history:79:ls /dev/ttyUSB*
+/home/jetson/.bash_history:81:ls  /dev/ttyCH341USB*
+/home/jetson/.bash_history:82:cd lerobot-main/
+/home/jetson/.bash_history:85:ls /dev/ttyACM*
+/home/jetson/.bash_history:86:ls /dev/ttyCH*
+/home/jetson/.bash_history:87:udevadm info -a -n /dev/ttyCH341USB0 
+/home/jetson/.bash_history:88:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:89:sudo udevadm trigger
+/home/jetson/.bash_history:90:ls /dev/USB*
+/home/jetson/.bash_history:91:ls /dev/ttyCH341USB0 
+/home/jetson/.bash_history:92:ls /dev/ttyCH341US*
+/home/jetson/.bash_history:93:ls /dev/tty*
+/home/jetson/.bash_history:94:ls /dev/ttyCH341USB0 
+/home/jetson/.bash_history:95:ls /dev/USB*
+/home/jetson/.bash_history:96:ls /dev/ttyCH341USB0 
+/home/jetson/.bash_history:97:udevadm info -a -n /dev/ttyCH341USB0 
+/home/jetson/.bash_history:98:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:99:sudo udevadm trigger
+/home/jetson/.bash_history:100:ls /dev/USB*
+/home/jetson/.bash_history:101:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:102:sudo udevadm trigger
+/home/jetson/.bash_history:103:ls /dev/USB*
+/home/jetson/.bash_history:106:udevadm info -a -n /dev/ttyACM*
+/home/jetson/.bash_history:107:udevadm info -a -n /dev/ttyACM0 
+/home/jetson/.bash_history:108:udevadm info -a -n /dev/ttyACM0
+/home/jetson/.bash_history:109:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:110:sudo udevadm trigger
+/home/jetson/.bash_history:117:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:118:sudo udevadm trigger
+/home/jetson/.bash_history:120:cd ~/lerobot-main
+/home/jetson/.bash_history:121:conda activate lerobot
+/home/jetson/.bash_history:122:python lerobot/scripts/control_robot.py   --robot.type=so101   --control.type=teleoperate   --robot.cameras='{}'
+/home/jetson/.bash_history:126:ls /dev/USB*
+/home/jetson/.bash_history:127:ls /dev/tty*
+/home/jetson/.bash_history:129:conda activate lerobot
+/home/jetson/.bash_history:130:python lerobot/scripts/control_robot.py   --robot.type=so101   --control.type=teleoperate   --robot.cameras='{}'
+/home/jetson/.bash_history:131:conda activate lerobot
+/home/jetson/.bash_history:132:python lerobot/scripts/control_robot.py   --robot.type=so101   --control.type=teleoperate   --robot.cameras='{}'
+/home/jetson/.bash_history:133:conda activate lerobot
+/home/jetson/.bash_history:134:python lerobot/scripts/control_robot.py   --robot.type=so101   --control.type=teleoperate   --robot.cameras='{}'
+/home/jetson/.bash_history:136:wget http://fishros.com/install -O fishros && . fishros
+/home/jetson/.bash_history:138:ros2 launch livox_ros_driver2 rviz_MID360_launch.py
+/home/jetson/.bash_history:150:git clone https://github.com/Livox-SDK/livox_ros_driver2.git ws_livox/src/livox_ros_driver2
+/home/jetson/.bash_history:152:source /opt/ros/humble/setup.sh
+/home/jetson/.bash_history:154:wget http://fishros.com/install -O fishros && . fishros
+/home/jetson/.bash_history:155:ros2 launch livox_ros_driver2 rviz_MID360_launch.py
+/home/jetson/.bash_history:159:sudo apt install ros-humble-ament-cmake-auto
+/home/jetson/.bash_history:169:roscore
+/home/jetson/.bash_history:176:source /opt/ros/humble/setup.sh
+/home/jetson/.bash_history:181:cd livox_ros_driver2/
+/home/jetson/.bash_history:185:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:187:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:189:colcon build --symlink-install --packages-select livox_ros_driver2
+/home/jetson/.bash_history:190:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:191:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:193:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:194:echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+/home/jetson/.bash_history:196:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:199:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:200:ros2 --help
+/home/jetson/.bash_history:201:ls /opt/ros/
+/home/jetson/.bash_history:202:ls /opt/ros/humble/
+/home/jetson/.bash_history:203:dpkg -l | grep ros-humble
+/home/jetson/.bash_history:205:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:207:ros2 --help
+/home/jetson/.bash_history:213:source /opt/ros/humble/setup.sh
+/home/jetson/.bash_history:217:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:218:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:221:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:222:cd src/livox_ros_driver2/
+/home/jetson/.bash_history:227:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:228:ros2 pkg list
+/home/jetson/.bash_history:230:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:232:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:239:conda activate lerobot
+/home/jetson/.bash_history:244:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:253:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:254:ros2 pkg list
+/home/jetson/.bash_history:255:ls /opt/ros/humble/bin/ros2
+/home/jetson/.bash_history:256:ls /usr/local/ros2/humble/bin/ros2
+/home/jetson/.bash_history:258:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:259:ros2 pkg list
+/home/jetson/.bash_history:260:echo $PATH | tr ':' '\n' | grep ros
+/home/jetson/.bash_history:261:ros2 --version
+/home/jetson/.bash_history:262:wget http://fishros.com/install -O fishros && . fishros
+/home/jetson/.bash_history:264:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:265:ros2 --version
+/home/jetson/.bash_history:266:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:285:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:286:sudo udevadm trigger
+/home/jetson/.bash_history:290:ls /dev/ttyAM*
+/home/jetson/.bash_history:291:ls /dev/ttyACM*
+/home/jetson/.bash_history:296:udevadm info -a -n /dev/ttyACM2
+/home/jetson/.bash_history:297:ls /dev/ttyACM*
+/home/jetson/.bash_history:298:udevadm info -a -n /dev/ttyACM3
+/home/jetson/.bash_history:299:udevadm info -a -n /dev/ttyACM2
+/home/jetson/.bash_history:300:ls /dev/ttyACM*
+/home/jetson/.bash_history:45:conda create -y -n lerobot python=3.10
+/home/jetson/.bash_history:46:conda activate lerobot
+/home/jetson/.bash_history:52:conda activate lerobot
+/home/jetson/.bash_history:53:cd lerobot-main/
+/home/jetson/.bash_history:59:ls /dev/tty-*
+/home/jetson/.bash_history:60:ls /dev/tty*
+/home/jetson/.bash_history:61:ls /dev/ttyUSB*
+/home/jetson/.bash_history:62:sudo ls /dev/ttyUSB*
+/home/jetson/.bash_history:68:sudo apt remove brltty
+/home/jetson/.bash_history:70:ls /dev/ttyUSB*
+/home/jetson/.bash_history:72:ls /dev/ttyUSB*
+/home/jetson/.bash_history:73:ls /dev/ttyACM*
+/home/jetson/.bash_history:74:conda activate lerobot
+/home/jetson/.bash_history:75:cd lerobot-main/
+/home/jetson/.bash_history:76:python lerobot/scripts/find_motors_bus_port.py
+/home/jetson/.bash_history:78:ls /dev/tty*
+/home/jetson/.bash_history:79:ls /dev/ttyUSB*
+/home/jetson/.bash_history:81:ls  /dev/ttyCH341USB*
+/home/jetson/.bash_history:82:cd lerobot-main/
+/home/jetson/.bash_history:85:ls /dev/ttyACM*
+/home/jetson/.bash_history:86:ls /dev/ttyCH*
+/home/jetson/.bash_history:87:udevadm info -a -n /dev/ttyCH341USB0 
+/home/jetson/.bash_history:88:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:89:sudo udevadm trigger
+/home/jetson/.bash_history:90:ls /dev/USB*
+/home/jetson/.bash_history:91:ls /dev/ttyCH341USB0 
+/home/jetson/.bash_history:92:ls /dev/ttyCH341US*
+/home/jetson/.bash_history:93:ls /dev/tty*
+/home/jetson/.bash_history:94:ls /dev/ttyCH341USB0 
+/home/jetson/.bash_history:95:ls /dev/USB*
+/home/jetson/.bash_history:96:ls /dev/ttyCH341USB0 
+/home/jetson/.bash_history:97:udevadm info -a -n /dev/ttyCH341USB0 
+/home/jetson/.bash_history:98:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:99:sudo udevadm trigger
+/home/jetson/.bash_history:100:ls /dev/USB*
+/home/jetson/.bash_history:101:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:102:sudo udevadm trigger
+/home/jetson/.bash_history:103:ls /dev/USB*
+/home/jetson/.bash_history:106:udevadm info -a -n /dev/ttyACM*
+/home/jetson/.bash_history:107:udevadm info -a -n /dev/ttyACM0 
+/home/jetson/.bash_history:108:udevadm info -a -n /dev/ttyACM0
+/home/jetson/.bash_history:109:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:110:sudo udevadm trigger
+/home/jetson/.bash_history:117:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:118:sudo udevadm trigger
+/home/jetson/.bash_history:120:cd ~/lerobot-main
+/home/jetson/.bash_history:121:conda activate lerobot
+/home/jetson/.bash_history:122:python lerobot/scripts/control_robot.py   --robot.type=so101   --control.type=teleoperate   --robot.cameras='{}'
+/home/jetson/.bash_history:126:ls /dev/USB*
+/home/jetson/.bash_history:127:ls /dev/tty*
+/home/jetson/.bash_history:129:conda activate lerobot
+/home/jetson/.bash_history:130:python lerobot/scripts/control_robot.py   --robot.type=so101   --control.type=teleoperate   --robot.cameras='{}'
+/home/jetson/.bash_history:131:conda activate lerobot
+/home/jetson/.bash_history:132:python lerobot/scripts/control_robot.py   --robot.type=so101   --control.type=teleoperate   --robot.cameras='{}'
+/home/jetson/.bash_history:133:conda activate lerobot
+/home/jetson/.bash_history:134:python lerobot/scripts/control_robot.py   --robot.type=so101   --control.type=teleoperate   --robot.cameras='{}'
+/home/jetson/.bash_history:136:wget http://fishros.com/install -O fishros && . fishros
+/home/jetson/.bash_history:138:ros2 launch livox_ros_driver2 rviz_MID360_launch.py
+/home/jetson/.bash_history:150:git clone https://github.com/Livox-SDK/livox_ros_driver2.git ws_livox/src/livox_ros_driver2
+/home/jetson/.bash_history:152:source /opt/ros/humble/setup.sh
+/home/jetson/.bash_history:154:wget http://fishros.com/install -O fishros && . fishros
+/home/jetson/.bash_history:155:ros2 launch livox_ros_driver2 rviz_MID360_launch.py
+/home/jetson/.bash_history:159:sudo apt install ros-humble-ament-cmake-auto
+/home/jetson/.bash_history:169:roscore
+/home/jetson/.bash_history:176:source /opt/ros/humble/setup.sh
+/home/jetson/.bash_history:181:cd livox_ros_driver2/
+/home/jetson/.bash_history:185:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:187:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:189:colcon build --symlink-install --packages-select livox_ros_driver2
+/home/jetson/.bash_history:190:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:191:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:193:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:194:echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+/home/jetson/.bash_history:196:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:199:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:200:ros2 --help
+/home/jetson/.bash_history:201:ls /opt/ros/
+/home/jetson/.bash_history:202:ls /opt/ros/humble/
+/home/jetson/.bash_history:203:dpkg -l | grep ros-humble
+/home/jetson/.bash_history:205:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:207:ros2 --help
+/home/jetson/.bash_history:213:source /opt/ros/humble/setup.sh
+/home/jetson/.bash_history:217:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:218:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:221:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:222:cd src/livox_ros_driver2/
+/home/jetson/.bash_history:227:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:228:ros2 pkg list
+/home/jetson/.bash_history:230:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:232:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:239:conda activate lerobot
+/home/jetson/.bash_history:244:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:253:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:254:ros2 pkg list
+/home/jetson/.bash_history:255:ls /opt/ros/humble/bin/ros2
+/home/jetson/.bash_history:256:ls /usr/local/ros2/humble/bin/ros2
+/home/jetson/.bash_history:258:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:259:ros2 pkg list
+/home/jetson/.bash_history:260:echo $PATH | tr ':' '\n' | grep ros
+/home/jetson/.bash_history:261:ros2 --version
+/home/jetson/.bash_history:262:wget http://fishros.com/install -O fishros && . fishros
+/home/jetson/.bash_history:264:source /opt/ros/humble/setup.bash
+/home/jetson/.bash_history:265:ros2 --version
+/home/jetson/.bash_history:266:ros2 pkg list | grep std_msgs
+/home/jetson/.bash_history:285:sudo udevadm control --reload-rules
+/home/jetson/.bash_history:286:sudo udevadm trigger
+/home/jetson/.bash_history:290:ls /dev/ttyAM*
+/home/jetson/.bash_history:291:ls /dev/ttyACM*
+/home/jetson/.bash_history:296:udevadm info -a -n /dev/ttyACM2
+/home/jetson/.bash_history:297:ls /dev/ttyACM*
+/home/jetson/.bash_history:298:udevadm info -a -n /dev/ttyACM3
+/home/jetson/.bash_history:299:udevadm info -a -n /dev/ttyACM2
+/home/jetson/.bash_history:300:ls /dev/ttyACM*

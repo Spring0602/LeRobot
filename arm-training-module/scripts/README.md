@@ -4,6 +4,8 @@
 
 ```text
 check_devices.py   # 只读检查串口、稳定链接和访问权限（已实现）
+device_config.py   # 校验序列号映射、udev 规则及在线别名（已实现）
+stage1_preflight.py # 第一阶段只读总体验收（已实现）
 calibration_files.py # 只读校验和备份标定文件（已实现）
 calibrate.py       # 真实标定包装器（等待硬件和上游单臂隔离方案）
 teleoperate.py     # 启动主从臂遥操作
@@ -14,6 +16,27 @@ run_policy.py      # 真机策略推理
 ```
 
 这些文件将在明确设备端口、相机数量和数据集命名后逐步实现。
+
+稳定端口规则：
+
+```bash
+python scripts/device_config.py
+chmod +x scripts/install_udev_rules.sh
+./scripts/install_udev_rules.sh
+python scripts/device_config.py --live
+```
+
+第一条命令只做离线一致性校验。安装规则和 `--live` 验证须在 Ubuntu
+连接四块控制板后执行。正式规则使用 `dialout` 组和 `0660` 权限，不沿用旧规则的
+`0777`。
+
+第一阶段只读验收：
+
+```bash
+python scripts/stage1_preflight.py
+```
+
+返回码 `2` 表示仍有硬件验收项阻塞；脚本不会连接电机总线或发送动作。
 
 设备盘点：
 
