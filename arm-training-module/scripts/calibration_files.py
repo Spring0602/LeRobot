@@ -37,6 +37,7 @@ CALIBRATION_KEYS = (
     "calib_mode",
     "motor_names",
 )
+SYNTHETIC_MARKER = "synthetic"
 
 
 def default_calibration_dir() -> Path:
@@ -52,7 +53,7 @@ def load_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def validate_calibration(path: Path) -> list[str]:
+def validate_calibration(path: Path, allow_synthetic: bool = False) -> list[str]:
     errors: list[str] = []
     try:
         data = load_json(path)
@@ -62,6 +63,15 @@ def validate_calibration(path: Path) -> list[str]:
     missing_keys = [key for key in CALIBRATION_KEYS if key not in data]
     if missing_keys:
         errors.append("missing keys: " + ", ".join(missing_keys))
+
+    if data.get(SYNTHETIC_MARKER) is True and not allow_synthetic:
+        errors.append("synthetic calibration is test-only; pass allow_synthetic explicitly")
+    if data.get(SYNTHETIC_MARKER) is True:
+        fixture_role = data.get("fixture_role")
+        if fixture_role not in ARM_IDS:
+            errors.append("synthetic fixture_role must name one of the four configured arms")
+        elif path.stem != fixture_role:
+            errors.append("synthetic fixture_role must match the calibration filename")
 
     for key in CALIBRATION_KEYS:
         if key in data and (not isinstance(data[key], list) or len(data[key]) != len(MOTOR_NAMES)):
@@ -82,6 +92,23 @@ def validate_calibration(path: Path) -> list[str]:
         if isinstance(values, list) and any(not isinstance(value, (int, float)) for value in values):
             errors.append(f"{key} values must be numeric")
 
+    starts = data.get("start_pos")
+    ends = data.get("end_pos")
+    if (
+        isinstance(starts, list)
+        and isinstance(ends, list)
+        and len(starts) == len(MOTOR_NAMES)
+        and len(ends) == len(MOTOR_NAMES)
+        and all(isinstance(value, (int, float)) for value in starts + ends)
+    ):
+        stationary = [
+            MOTOR_NAMES[index]
+            for index, (start, end) in enumerate(zip(starts, ends, strict=True))
+            if start == end
+        ]
+        if stationary:
+            errors.append("start_pos and end_pos must differ for: " + ", ".join(stationary))
+
     return errors
 
 
@@ -97,7 +124,7 @@ def calibration_paths(calibration_dir: Path) -> dict[str, Path]:
     return {arm_id: calibration_dir / f"{arm_id}.json" for arm_id in ARM_IDS}
 
 
-def print_status(calibration_dir: Path) -> int:
+def print_status(calibration_dir: Path, allow_synthetic: bool = False) -> int:
     print(f"Calibration directory: {calibration_dir}")
     all_valid = True
     for arm_id, path in calibration_paths(calibration_dir).items():
@@ -105,7 +132,7 @@ def print_status(calibration_dir: Path) -> int:
             print(f"[MISSING] {arm_id}: {path}")
             all_valid = False
             continue
-        errors = validate_calibration(path)
+        errors = validate_calibration(path, allow_synthetic=allow_synthetic)
         if errors:
             print(f"[INVALID] {arm_id}: {path}")
             for error in errors:
@@ -116,7 +143,12 @@ def print_status(calibration_dir: Path) -> int:
     return 0 if all_valid else 2
 
 
-def back_up(calibration_dir: Path, destination_root: Path, allow_partial: bool) -> int:
+def back_up(
+    calibration_dir: Path,
+    destination_root: Path,
+    allow_partial: bool,
+    allow_synthetic: bool = False,
+) -> int:
     paths = calibration_paths(calibration_dir)
     available = {arm_id: path for arm_id, path in paths.items() if path.is_file()}
     missing = [arm_id for arm_id in ARM_IDS if arm_id not in available]
@@ -129,7 +161,10 @@ def back_up(calibration_dir: Path, destination_root: Path, allow_partial: bool) 
         print("Backup refused because no calibration files exist.", file=sys.stderr)
         return 2
 
-    invalid = {arm_id: validate_calibration(path) for arm_id, path in available.items()}
+    invalid = {
+        arm_id: validate_calibration(path, allow_synthetic=allow_synthetic)
+        for arm_id, path in available.items()
+    }
     invalid = {arm_id: errors for arm_id, errors in invalid.items() if errors}
     if invalid:
         for arm_id, errors in invalid.items():
@@ -146,6 +181,7 @@ def back_up(calibration_dir: Path, destination_root: Path, allow_partial: bool) 
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "source": str(calibration_dir.resolve()),
         "complete": not missing,
+        "synthetic": allow_synthetic,
         "missing_arm_ids": missing,
         "files": {},
     }
@@ -173,6 +209,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=default_calibration_dir(),
         help="SO-101 calibration directory",
     )
+    parser.add_argument(
+        "--allow-synthetic",
+        action="store_true",
+        help="allow explicitly marked test fixtures; never use this for robot operation",
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("status", help="report missing or invalid calibration files")
     backup_parser = subparsers.add_parser("backup", help="validate and copy calibration files")
@@ -189,9 +230,14 @@ def main() -> int:
     args = build_parser().parse_args()
     calibration_dir = args.calibration_dir.expanduser().resolve()
     if args.command == "status":
-        return print_status(calibration_dir)
+        return print_status(calibration_dir, allow_synthetic=args.allow_synthetic)
     if args.command == "backup":
-        return back_up(calibration_dir, args.destination_root, args.allow_partial)
+        return back_up(
+            calibration_dir,
+            args.destination_root,
+            args.allow_partial,
+            allow_synthetic=args.allow_synthetic,
+        )
     raise AssertionError(f"Unhandled command: {args.command}")
 
 

@@ -5,6 +5,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 SCRIPT_PATH = Path(__file__).resolve().parents[1] / "scripts" / "device_config.py"
@@ -33,6 +34,14 @@ class DeviceConfigTest(unittest.TestCase):
             device_config.validate_map(data),
         )
 
+    def test_duplicate_alias_is_rejected(self) -> None:
+        data = device_config.load_map(self.map_path)
+        data["arms"][1]["alias"] = data["arms"][0]["alias"]
+        self.assertIn(
+            "arms must contain each expected /dev alias exactly once",
+            device_config.validate_map(data),
+        )
+
     def test_world_writable_rule_is_rejected(self) -> None:
         data = device_config.load_map(self.map_path)
         text = self.rules_path.read_text(encoding="utf-8").replace(
@@ -44,6 +53,30 @@ class DeviceConfigTest(unittest.TestCase):
             self.assertIn(
                 "udev rules must not grant world read/write/execute access",
                 device_config.validate_rules(data, path),
+            )
+
+    def test_missing_least_privilege_fields_is_rejected(self) -> None:
+        data = device_config.load_map(self.map_path)
+        text = self.rules_path.read_text(encoding="utf-8").replace(
+            ', GROUP="dialout"', ""
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "99-so101.rules"
+            path.write_text(text, encoding="utf-8")
+            self.assertIn(
+                'each udev rule must contain GROUP="dialout"',
+                device_config.validate_rules(data, path),
+            )
+
+    def test_missing_udevadm_returns_clear_error(self) -> None:
+        with mock.patch.object(
+            device_config.subprocess,
+            "run",
+            side_effect=FileNotFoundError,
+        ):
+            self.assertEqual(
+                device_config.udev_properties(Path("/dev/example")),
+                {"_ERROR": "udevadm is unavailable"},
             )
 
 

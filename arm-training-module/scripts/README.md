@@ -79,5 +79,21 @@ LEROBOT_VENV="$HOME/lerobot-env" \
 
 ```bash
 source "$HOME/lerobot-env/bin/activate"
-python scripts/verify_environment.py
+python scripts/verify_environment.py \
+  --create-runtime-dirs \
+  --json-output outputs/environment_report.json
 ```
+
+退出码 `1` 表示软件依赖或必要路径缺失。JSON 中
+`hardware_status: not_checked` 是无硬件开发阶段的正常结果。
+
+模拟标定夹具仅用于测试：
+
+```bash
+python scripts/calibration_files.py \
+  --calibration-dir tests/fixtures/calibration_synthetic \
+  --allow-synthetic \
+  status
+```
+
+不加 `--allow-synthetic` 时工具会主动拒绝模拟标定文件，防止其被误认为真机标定。

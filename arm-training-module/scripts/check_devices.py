@@ -6,11 +6,20 @@ from __future__ import annotations
 
 import getpass
 import glob
-import grp
 import os
+import platform
+import sys
 from pathlib import Path
 
-from serial.tools import list_ports
+try:
+    import grp
+except ImportError:  # pragma: no cover - only used for a clearer non-Linux message
+    grp = None
+
+try:
+    from serial.tools import list_ports
+except ImportError:  # pragma: no cover - exercised through command-level behavior
+    list_ports = None
 
 
 DEVICE_PATTERNS = (
@@ -40,12 +49,20 @@ def resolve_link(path: Path) -> str:
 
 
 def current_groups() -> list[str]:
+    if grp is None or not hasattr(os, "getgroups"):
+        return []
     group_ids = os.getgroups()
     return sorted({grp.getgrgid(group_id).gr_name for group_id in group_ids})
 
 
 def main() -> int:
     print("SO-101 device inventory (read-only)")
+    if platform.system() != "Linux":
+        print("Software error: device inventory must run inside Ubuntu/Linux.", file=sys.stderr)
+        return 1
+    if list_ports is None:
+        print("Software error: pyserial is missing; install the project dependencies.", file=sys.stderr)
+        return 1
     print(f"User: {getpass.getuser()}")
     groups = current_groups()
     print(f"Groups: {', '.join(groups)}")

@@ -1,0 +1,10 @@
+{
+  "synthetic": true,
+  "fixture_role": "left_follower",
+  "homing_offset": [0, 0, 0, 0, 0, 0, 0],
+  "drive_mode": [0, 0, 0, 0, 0, 0, 0],
+  "start_pos": [100, 110, 120, 130, 140, 150, 160],
+  "end_pos": [200, 210, 220, 230, 240, 250, 260],
+  "calib_mode": ["DEGREE", "DEGREE", "DEGREE", "DEGREE", "DEGREE", "DEGREE", "LINEAR"],
+  "motor_names": ["shoulder_pan", "shoulder_lift", "elbow_flex", "wrist_flex", "wrist_roll", "wrist_x", "gripper"]
+}

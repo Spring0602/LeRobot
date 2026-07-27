@@ -105,18 +105,25 @@ def validate_rules(data: dict[str, Any], rules_path: Path) -> list[str]:
     text = rules_path.read_text(encoding="utf-8")
     if 'MODE="0777"' in text or 'MODE:="0777"' in text:
         errors.append("udev rules must not grant world read/write/execute access")
+    for required in ('GROUP="dialout"', 'MODE="0660"', 'TAG+="uaccess"'):
+        if len(re.findall(re.escape(required), text)) != len(data["arms"]):
+            errors.append(f"each udev rule must contain {required}")
     return errors
 
 
 def udev_properties(device: Path) -> dict[str, str]:
-    result = subprocess.run(
-        ["udevadm", "info", "--query=property", f"--name={device}"],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
+    try:
+        result = subprocess.run(
+            ["udevadm", "info", "--query=property", f"--name={device}"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+    except FileNotFoundError:
+        return {"_ERROR": "udevadm is unavailable"}
     if result.returncode != 0:
-        return {}
+        detail = result.stderr.strip() or f"udevadm exited with {result.returncode}"
+        return {"_ERROR": detail}
     return dict(
         line.split("=", 1)
         for line in result.stdout.splitlines()
@@ -128,12 +135,20 @@ def check_live(data: dict[str, Any]) -> int:
     failed = False
     for arm in data["arms"]:
         alias = Path(arm["alias"])
+        if alias.is_symlink() and not alias.exists():
+            print(f"[BROKEN] {arm['role']}: {alias} is a broken symlink")
+            failed = True
+            continue
         if not alias.exists():
             print(f"[MISSING] {arm['role']}: {alias}")
             failed = True
             continue
         target = alias.resolve()
         properties = udev_properties(target)
+        if "_ERROR" in properties:
+            print(f"[FAIL] {arm['role']}: cannot inspect {target}: {properties['_ERROR']}")
+            failed = True
+            continue
         serial = properties.get("ID_SERIAL_SHORT")
         vendor = properties.get("ID_VENDOR_ID")
         product = properties.get("ID_MODEL_ID")
@@ -178,7 +193,7 @@ def main() -> int:
     if errors:
         for error in errors:
             print(f"[FAIL] {error}")
-        return 2
+        return 1
     print("[OK] device map and udev rules are internally consistent")
     if args.live:
         return check_live(data)

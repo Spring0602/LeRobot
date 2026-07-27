@@ -41,6 +41,80 @@ class CalibrationFilesTest(unittest.TestCase):
             errors = calibration_files.validate_calibration(path)
             self.assertIn("motor_names does not match the configured SO-101 joint order", errors)
 
+    def test_rejects_missing_field(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            data = valid_calibration()
+            del data["homing_offset"]
+            path = Path(temp_dir) / "left_follower.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            self.assertIn(
+                "missing keys: homing_offset",
+                calibration_files.validate_calibration(path),
+            )
+
+    def test_rejects_invalid_drive_mode(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            data = valid_calibration()
+            data["drive_mode"][3] = 2
+            path = Path(temp_dir) / "left_follower.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            self.assertIn(
+                "drive_mode values must be 0 or 1",
+                calibration_files.validate_calibration(path),
+            )
+
+    def test_rejects_damaged_json(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "left_follower.json"
+            path.write_text("{damaged", encoding="utf-8")
+            self.assertTrue(
+                calibration_files.validate_calibration(path)[0].startswith(
+                    "cannot read valid calibration JSON"
+                )
+            )
+
+    def test_rejects_stationary_range(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            data = valid_calibration()
+            data["end_pos"][0] = data["start_pos"][0]
+            path = Path(temp_dir) / "left_follower.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            self.assertIn(
+                "start_pos and end_pos must differ for: shoulder_pan",
+                calibration_files.validate_calibration(path),
+            )
+
+    def test_synthetic_fixtures_require_explicit_opt_in(self) -> None:
+        fixture_dir = Path(__file__).parent / "fixtures" / "calibration_synthetic"
+        for arm_id in calibration_files.ARM_IDS:
+            path = fixture_dir / f"{arm_id}.json"
+            self.assertIn(
+                "synthetic calibration is test-only; pass allow_synthetic explicitly",
+                calibration_files.validate_calibration(path),
+            )
+            self.assertEqual(
+                calibration_files.validate_calibration(path, allow_synthetic=True),
+                [],
+            )
+
+    def test_synthetic_fixture_role_must_match_filename(self) -> None:
+        fixture = (
+            Path(__file__).parent
+            / "fixtures"
+            / "calibration_synthetic"
+            / "left_follower.json"
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            wrong_name = Path(temp_dir) / "right_follower.json"
+            wrong_name.write_text(fixture.read_text(encoding="utf-8"), encoding="utf-8")
+            self.assertIn(
+                "synthetic fixture_role must match the calibration filename",
+                calibration_files.validate_calibration(
+                    wrong_name,
+                    allow_synthetic=True,
+                ),
+            )
+
     def test_complete_backup_writes_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -59,6 +133,24 @@ class CalibrationFilesTest(unittest.TestCase):
             manifest = json.loads((backups[0] / "manifest.json").read_text(encoding="utf-8"))
             self.assertTrue(manifest["complete"])
             self.assertEqual(len(manifest["files"]), 4)
+
+    def test_partial_backup_requires_explicit_permission(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            calibration_dir = root / "calibration"
+            calibration_dir.mkdir()
+            (calibration_dir / "left_follower.json").write_text(
+                json.dumps(valid_calibration()),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                calibration_files.back_up(
+                    calibration_dir,
+                    root / "backups",
+                    allow_partial=False,
+                ),
+                2,
+            )
 
 
 if __name__ == "__main__":
