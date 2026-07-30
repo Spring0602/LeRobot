@@ -1,0 +1,6 @@
+# SO-101 dual-arm controller aliases recovered from the original Jetson host.
+# Install with: sudo ./scripts/install_udev_rules.sh
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d3", ATTRS{serial}=="5AAF288040", GROUP="dialout", MODE="0660", TAG+="uaccess", SYMLINK+="f_left"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d3", ATTRS{serial}=="5A7C119017", GROUP="dialout", MODE="0660", TAG+="uaccess", SYMLINK+="f_right"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d3", ATTRS{serial}=="5AB0158432", GROUP="dialout", MODE="0660", TAG+="uaccess", SYMLINK+="l_left"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d3", ATTRS{serial}=="5AAF288007", GROUP="dialout", MODE="0660", TAG+="uaccess", SYMLINK+="l_right"

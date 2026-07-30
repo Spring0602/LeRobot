@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "usb": {
+    "vendor_id": "1a86",
+    "product_id": "55d3"
+  },
+  "arms": [
+    {
+      "label": "FL",
+      "role": "left_follower",
+      "alias": "/dev/f_left",
+      "serial": "5AAF288040"
+    },
+    {
+      "label": "FR",
+      "role": "right_follower",
+      "alias": "/dev/f_right",
+      "serial": "5A7C119017"
+    },
+    {
+      "label": "LL",
+      "role": "left_leader",
+      "alias": "/dev/l_left",
+      "serial": "5AB0158432"
+    },
+    {
+      "label": "LR",
+      "role": "right_leader",
+      "alias": "/dev/l_right",
+      "serial": "5AAF288007"
+    }
+  ],
+  "evidence": {
+    "source": "docs/02_udev_rules.txt",
+    "source_host": "jetson",
+    "physical_labels_present": false,
+    "live_reverified": false
+  }
+}
