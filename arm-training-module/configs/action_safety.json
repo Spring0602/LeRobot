@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "action": {
+    "arm_order": ["left_follower", "right_follower"],
+    "joint_order": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll",
+      "wrist_x",
+      "gripper"
+    ],
+    "dtype": "float",
+    "size": 14
+  },
+  "control": {
+    "target_frequency_hz": 30.0,
+    "frequency_tolerance_hz": 5.0
+  },
+  "real_hardware": {
+    "absolute_limits": null,
+    "max_step_delta": null,
+    "status": "blocked_until_measured"
+  },
+  "synthetic_test": {
+    "absolute_limits_per_arm": [
+      [-180.0, 180.0],
+      [-180.0, 180.0],
+      [-180.0, 180.0],
+      [-180.0, 180.0],
+      [-180.0, 180.0],
+      [-180.0, 180.0],
+      [0.0, 100.0]
+    ],
+    "max_step_delta_per_arm": [10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0],
+    "warning": "Synthetic test values are not real robot safety limits."
+  }
+}

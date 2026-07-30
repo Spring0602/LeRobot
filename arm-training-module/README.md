@@ -49,6 +49,15 @@ from lerobot.common.policies.diffusion.modeling_diffusion import DiffusionPolicy
 `docs/无硬件软件开发计划.md` 执行；该计划使用模拟数据和离线测试推进软件开发，
 不会把模拟结果当作真机验收。
 
+无硬件软件计划第一周已完成。Ubuntu 统一验收命令：
+
+```bash
+cd "/mnt/hgfs/engineering_files/arm-training-module"
+python scripts/verify_first_week.py
+```
+
+真实关节安全范围未测量时，动作安全层会默认拒绝真机输出。
+
 ## 数据管理约定
 
 - 大型数据集、视频、模型权重和训练日志不提交 Git。

@@ -6,6 +6,8 @@
 check_devices.py   # 只读检查串口、稳定链接和访问权限（已实现）
 device_config.py   # 校验序列号映射、udev 规则及在线别名（已实现）
 stage1_preflight.py # 第一阶段只读总体验收（已实现）
+action_safety.py   # 双臂动作形状、范围、突变和频率检查（已实现）
+verify_first_week.py # 无硬件软件计划第一周统一验收（已实现）
 calibration_files.py # 只读校验和备份标定文件（已实现）
 calibrate.py       # 真实标定包装器（等待硬件和上游单臂隔离方案）
 teleoperate.py     # 启动主从臂遥操作
@@ -97,3 +99,24 @@ python scripts/calibration_files.py \
 ```
 
 不加 `--allow-synthetic` 时工具会主动拒绝模拟标定文件，防止其被误认为真机标定。
+
+## 动作安全层
+
+验证一条 14 维模拟动作：
+
+```bash
+python scripts/action_safety.py \
+  --mode synthetic \
+  --action '[0,0,0,0,0,0,0,0,0,0,0,0,0,0]'
+```
+
+真实安全范围尚未测量，当前使用 `--mode real` 必定被拒绝。不要用 synthetic 参数
+驱动机械臂。
+
+第一周统一只读验收：
+
+```bash
+python scripts/verify_first_week.py
+```
+
+该命令不会打开串口或发送电机指令。
